@@ -5,11 +5,18 @@ const setHeaders = require("./utils/middlewares/setHeaders");
 const routes = require("./routes/index.js");
 const sequelize = require("./config/connect");
 const path = require("path");
+const cors = require("cors");
 const port = process.env.PORT || 3001;
 
 app.use(express.json({ limit: "50mb" }));
 
 app.use(express.static("public"));
+
+app.use(
+  cors({
+    origin: "https://case-router-front.vercel.app/",
+  })
+);
 
 sequelize
   .sync()
