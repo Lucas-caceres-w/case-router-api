@@ -4,7 +4,7 @@ const { Docs, Casos, Fotos } = require("../models");
 const fs = require("fs");
 const path = require("path");
 
-const deleteDocument = async (idCaso) => {
+const deleteDocument = async (idCaso, next) => {
   try {
     const documento = await Docs.findOne({
       where: { casoId: idCaso },
@@ -22,7 +22,7 @@ const deleteDocument = async (idCaso) => {
 
     if (documento) {
       const columnas = Object.keys(documento.toJSON());
-      if (columnas.length > 0) {
+      if (columnas?.length > 0) {
         for (const columna of columnas) {
           const valor = documento[columna];
           if (valor) {
@@ -45,8 +45,7 @@ const deleteDocument = async (idCaso) => {
     }
     if (fotos) {
       const fotosGrales = JSON.parse(fotos.toJSON().fotosGrales);
-      if (fotosGrales.length > 0) {
-        console.log(fotosGrales);
+      if (fotosGrales?.length > 0) {
         fotosGrales.map((fot, idx) => {
           if (fot) {
             const filePath = path.join(
@@ -248,7 +247,6 @@ const importData = async (req, res) => {
       return res.status(200).json("noAdd");
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).json(err);
   }
 };
