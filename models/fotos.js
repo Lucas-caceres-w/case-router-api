@@ -24,7 +24,7 @@ const Fotos = sequelize.define("Fotos", {
     type: DataTypes.TEXT,
   },
   fotosGrales: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
   },
 });
 
