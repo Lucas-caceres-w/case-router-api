@@ -13,6 +13,14 @@ const configsql = {
   port: process.env.HOST_PORT_DB,
   dialect: "mysql",
 };
+const configLocal = {
+  host: process.env.HOST_DB,
+  username: process.env.USER_DB,
+  password: process.env.PASSWORD_DB,
+  database: process.env.DATABASE,
+  port: process.env.PORT_DB,
+  dialect: "mysql",
+};
 
 const sequelize = new Sequelize(configsql);
 
