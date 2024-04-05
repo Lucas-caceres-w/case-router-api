@@ -22,7 +22,7 @@ const deleteDocument = async (idCaso, next) => {
 
     if (documento) {
       const columnas = Object.keys(documento.toJSON());
-      if (columnas?.length > 0) {
+      if (columnas && columnas?.length > 0) {
         for (const columna of columnas) {
           const valor = documento[columna];
           if (valor) {
@@ -45,7 +45,7 @@ const deleteDocument = async (idCaso, next) => {
     }
     if (fotos) {
       const fotosGrales = JSON.parse(fotos.toJSON().fotosGrales);
-      if (fotosGrales?.length > 0) {
+      if (fotosGrales && fotosGrales?.length > 0) {
         fotosGrales.map((fot, idx) => {
           if (fot) {
             const filePath = path.join(
