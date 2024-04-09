@@ -32,12 +32,18 @@ const saveFotos = async (req, res) => {
   try {
     if (files.length > 0) {
       const fileNames = { fotosGrales: files.map((e) => e.filename) };
-      const fotos = await Fotos.update(fileNames, {
+      const [fotos, created] = await Fotos.findOrCreate(fileNames, {
         where: {
           casoId: id,
         },
       });
-      //si no se guardaron las imagenes borrar las fotos
+      if (!created) {
+        const updatedFotos = await fotos.update(
+          { fotosGrales: [...fotos.fotosGrales, ...fileNames] },
+          { where: { casoId: id } }
+        );
+        return res.status(200).json("Fotos agregadas correctamente");
+      }
       return res.status(200).json("Fotos guardadas correctamente");
     } else {
       return res.status(400).json("No hay archivos para guardar");
