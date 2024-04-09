@@ -41,7 +41,11 @@ const Documento = sequelize.define("documentos", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  fotoPredioArea: {
+  fotoPredio: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  fotoArea: {
     type: DataTypes.STRING,
     allowNull: true,
   },

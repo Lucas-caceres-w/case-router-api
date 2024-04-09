@@ -188,16 +188,7 @@ const CambiarEstatus = async (req, res) => {
   const idCaso = await req.params.id;
   const { estatus } = await req.body;
   try {
-    const { fechaRecibido } = await Casos.findOne({ where: { id: idCaso } });
-    let fechaUpdate;
-
-    if (!fechaRecibido) {
-      fechaUpdate = estatus !== "iniciado" ? sequelize.literal("NOW()") : null;
-    }
-
-    const data = { estatus, fechaRecibido: fechaUpdate };
-
-    const result = await Casos.update(data, {
+    const result = await Casos.update(estatus, {
       where: {
         id: idCaso,
       },

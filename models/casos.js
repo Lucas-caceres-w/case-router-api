@@ -53,6 +53,10 @@ const Caso = sequelize.define("casos", {
     type: DataTypes.DATE,
     allowNull: true,
   },
+  fechaRevision: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
   observaciones: {
     type: DataTypes.TEXT,
     allowNull: true,

@@ -29,25 +29,37 @@ const getFotoByCasoId = async (req, res) => {
 const saveFotos = async (req, res) => {
   const id = await req.params.id;
   const files = req.files;
+  let status;
   try {
     if (files.length > 0) {
-      const fileNames = { fotosGrales: files.map((e) => e.filename) };
-      const [fotos, created] = await Fotos.findOrCreate(fileNames, {
-        where: {
-          casoId: id,
-        },
-      });
-      if (!created) {
-        const updatedFotos = await fotos.update(
-          { fotosGrales: [...fotos.fotosGrales, ...fileNames] },
+      const fileNames = files.map((e) => e.filename);
+      let fotos = await Fotos.findOne({ where: { casoId: id } });
+
+      if (fotos && fotos.fotosGrales) {
+        const existingPhotos = fotos.fotosGrales;
+        let newFotos = [...existingPhotos, ...fileNames];
+        //console.log(existingPhotos, newFotos);
+
+        await Fotos.update(
+          { fotosGrales: newFotos },
           { where: { casoId: id } }
         );
-        return res.status(200).json("Fotos agregadas correctamente");
+        status = "ok";
+      } else {
+        //console.log(fileNames);
+
+        await Fotos.update(
+          { fotosGrales: fileNames },
+          { where: { casoId: id } }
+        );
+
+        status = "ok";
       }
-      return res.status(200).json("Fotos guardadas correctamente");
     } else {
-      return res.status(400).json("No hay archivos para guardar");
+      status = "No hay archivos para guardar";
     }
+
+    return res.status(200).json(status);
   } catch (err) {
     for (let i = 0; i < files.length; i++) {
       setTimeout(() => {
