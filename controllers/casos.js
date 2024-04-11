@@ -186,7 +186,8 @@ const deleteCaso = async (req, res) => {
 
 const CambiarEstatus = async (req, res) => {
   const idCaso = await req.params.id;
-  const { estatus } = await req.body;
+  const estatus = await req.body;
+
   try {
     const result = await Casos.update(estatus, {
       where: {
