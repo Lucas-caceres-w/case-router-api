@@ -19,6 +19,7 @@ const deleteDocument = async (idCaso, next) => {
         exclude: ["id", "casoId", "createdAt", "updatedAt"],
       },
     });
+    console.log(fotos);
 
     if (documento) {
       const columnas = Object.keys(documento.toJSON());
@@ -44,7 +45,7 @@ const deleteDocument = async (idCaso, next) => {
       }
     }
     if (fotos) {
-      const fotosGrales = JSON.parse(fotos.toJSON().fotosGrales);
+      const fotosGrales = fotos.fotosGrales;
       if (fotosGrales && fotosGrales?.length > 0) {
         fotosGrales.map((fot, idx) => {
           if (fot) {
@@ -175,6 +176,7 @@ const deleteCaso = async (req, res) => {
           id: idCaso,
         },
       });
+      console.log(result);
       return res.status(200).json("caso eliminado");
     } else {
       return res.status(404).json("No existe el caso");
