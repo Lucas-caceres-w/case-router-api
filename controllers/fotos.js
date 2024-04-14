@@ -15,12 +15,12 @@ const getFotos = async (req, res) => {
 const getFotoByCasoId = async (req, res) => {
   const id = req.params.id;
   try {
-    const casos = await Fotos.findOne({
+    const fotos = await Fotos.findOne({
       where: {
         casoId: id,
       },
     });
-    res.status(200).json(casos);
+    res.status(200).json(fotos);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -70,8 +70,36 @@ const saveFotos = async (req, res) => {
   }
 };
 
+const deleteFotos = async (req, res) => {
+  const id = req.params.id;
+  const { path } = await req.body;
+
+  try {
+    const fotos = await Fotos.findOne({
+      where: {
+        casoId: id,
+      },
+    });
+    if (!fotos) {
+      return res.status(203).json("no existen fotos");
+    }
+
+    fotos.fotosGrales = fotos.fotosGrales.filter((item) => item !== path);
+
+    fotos.save();
+
+    fs.unlinkSync(`public/fotos_casos/${path}`);
+
+    return res.status(200).json("Imagen eliminada");
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json(err);
+  }
+};
+
 module.exports = {
   getFotos,
+  deleteFotos,
   getFotoByCasoId,
   saveFotos,
 };

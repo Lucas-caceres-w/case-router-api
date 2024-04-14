@@ -3,6 +3,7 @@ const {
   getFotos,
   saveFotos,
   getFotoByCasoId,
+  deleteFotos,
 } = require("../controllers/index");
 const router = express.Router();
 const multer = require("multer");
@@ -24,5 +25,7 @@ router.get("/", getFotos);
 router.get("/:id", getFotoByCasoId);
 
 router.post("/:id", uploads.array("photos", 5), saveFotos);
+
+router.delete("/:id", deleteFotos);
 
 module.exports = router;

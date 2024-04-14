@@ -13,6 +13,7 @@ const {
   getFotos,
   saveFotos,
   getFotoByCasoId,
+  deleteFotos,
 } = require("../controllers/fotos");
 const {
   getCasos,
@@ -44,4 +45,5 @@ module.exports = {
   AddDocument,
   importData,
   saveFotos,
+  deleteFotos,
 };
