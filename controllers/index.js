@@ -2,6 +2,7 @@ const {
   getUsers,
   createUser,
   deleteUser,
+  updateUser,
   getUser,
 } = require("../controllers/usuarios");
 const {
@@ -32,6 +33,7 @@ module.exports = {
   getUsers,
   createUser,
   deleteUser,
+  updateUser,
   getUser,
   getCasos,
   getOne,

@@ -22,6 +22,6 @@ const configLocal = {
   dialect: "mysql",
 };
 
-const sequelize = new Sequelize(configsql);
+const sequelize = new Sequelize(configLocal);
 
 module.exports = sequelize;

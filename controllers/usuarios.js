@@ -60,6 +60,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  const data = await req.body;
+  const id = req.params.id;
+  try {
+    const result = await Usuarios.update(data, {
+      where: {
+        id: id,
+      },
+    });
+
+    return res.status(200).json("usuario actualizado");
+  } catch (err) {
+    return res.status(503).json(err);
+  }
+};
+
 const Login = async (req, res) => {
   try {
     const data = await req.body;
@@ -92,5 +108,6 @@ module.exports = {
   createUser,
   deleteUser,
   Login,
+  updateUser,
   getUser,
 };
