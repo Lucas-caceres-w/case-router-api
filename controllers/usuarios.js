@@ -62,7 +62,8 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const data = await req.body;
-  const id = req.params.id;
+  const id = await req.params.id;
+  console.log(data, id);
   try {
     const result = await Usuarios.update(data, {
       where: {
