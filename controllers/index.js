@@ -4,6 +4,7 @@ const {
   deleteUser,
   updateUser,
   getUser,
+  Recovery,
 } = require("../controllers/usuarios");
 const {
   uploadDoc,
