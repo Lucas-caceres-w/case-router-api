@@ -17,7 +17,7 @@ const getFotoByCasoId = async (req, res) => {
   try {
     const fotos = await Fotos.findOne({
       where: {
-        casoId: id,
+        proyectoId: id,
       },
     });
     res.status(200).json(fotos);
@@ -33,7 +33,7 @@ const saveFotos = async (req, res) => {
   try {
     if (files.length > 0) {
       const fileNames = files.map((e) => e.filename);
-      let fotos = await Fotos.findOne({ where: { casoId: id } });
+      let fotos = await Fotos.findOne({ where: { proyectoId: id } });
 
       if (fotos && fotos.fotosGrales) {
         const existingPhotos = fotos.fotosGrales;
@@ -42,7 +42,7 @@ const saveFotos = async (req, res) => {
 
         await Fotos.update(
           { fotosGrales: newFotos },
-          { where: { casoId: id } }
+          { where: { proyectoId: id } }
         );
         status = "ok";
       } else {
@@ -50,7 +50,7 @@ const saveFotos = async (req, res) => {
 
         await Fotos.update(
           { fotosGrales: fileNames },
-          { where: { casoId: id } }
+          { where: { proyectoId: id } }
         );
 
         status = "ok";
@@ -77,7 +77,7 @@ const deleteFotos = async (req, res) => {
   try {
     const fotos = await Fotos.findOne({
       where: {
-        casoId: id,
+        proyectoId: id,
       },
     });
     if (!fotos) {

@@ -1,82 +1,77 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/connect");
-const Caso = require("./casos");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/connect');
 
-const Documento = sequelize.define("documentos", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  casoId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "casos",
-      key: "id",
-    },
-    onDelete: "CASCADE",
-  },
-  escrituras: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  evidenciaServicio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  evidenciaTitularidad: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  plano: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  planoInscripcion: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  planoSituacion: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  fotoPredio: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  fotoArea: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  memorialSubsanacion: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  memoExplicativo: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  mapaEsquematico: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  credencialIngArq: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  crtAut: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  AAA1190: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  cartaRecomendacion: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
+const Documento = sequelize.define('documentos', {
+   id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+   },
+   proyectoId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+         model: 'casos',
+         key: 'id',
+      },
+      onDelete: 'CASCADE',
+   },
+   planAsbesto: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   planPlomo: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   estudioAsbesto: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   estudioEnmendado: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   estudioPlomo: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   estudioPlomoEnmendado: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   permisoAsbesto: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   permisoPlomo: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   cambioOrden: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   planosProyectos: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   planosProyectosDemolicion: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   planosCambioOrden: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   documentosCambioOrden: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   otros: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
 });
 
 module.exports = Documento;

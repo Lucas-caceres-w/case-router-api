@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/connect");
-const Caso = require("./casos");
 
 const Fotos = sequelize.define("Fotos", {
   id: {
@@ -8,7 +7,7 @@ const Fotos = sequelize.define("Fotos", {
     primaryKey: true,
     autoIncrement: true,
   },
-  casoId: {
+  proyectoId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -16,12 +15,6 @@ const Fotos = sequelize.define("Fotos", {
       key: "id",
     },
     onDelete: "CASCADE",
-  },
-  fotoAreaSistemaAgua: {
-    type: DataTypes.TEXT,
-  },
-  fotoAreaAlcantarillado: {
-    type: DataTypes.TEXT,
   },
   fotosGrales: {
     type: DataTypes.JSON,
