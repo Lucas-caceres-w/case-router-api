@@ -7,6 +7,10 @@ const Personal = sequelize.define('personal', {
       primaryKey: true,
       autoIncrement: true,
    },
+   idPersonal: {
+      type: DataTypes.INTEGER,
+      unique: true,
+   },
    name: {
       type: DataTypes.STRING,
       allowNull: false,

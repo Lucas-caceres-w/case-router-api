@@ -27,7 +27,7 @@ const isCertificacionVencida = (fechaExpiracion) => {
 
    if (diffInDays < 0) {
       return 'vencida';
-   } else if (diffInDays <= 10) {
+   } else if (diffInDays <= 60) {
       return 'próxima a vencer';
    }
    return null;
@@ -54,7 +54,7 @@ const verificarCertificaciones = async () => {
                   certificacion.tipoDocumento
                }${
                   certificacion.tipoDocumento === 'licencia'
-                     ? ` de conducir, categoria-(${certificacion.tipoEvaluacion})`
+                     ? ` de conducir, categoria-${certificacion.tipoEvaluacion}`
                      : ''
                } (${estado}), vence el: ${format(
                   new Date(certificacion.fechaExpiracion),

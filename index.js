@@ -7,6 +7,7 @@ const routes = require('./routes/index.js');
 const sequelize = require('./config/connect');
 const cron = require('node-cron');
 const cors = require('cors');
+const Personal = require('./models/personal.js');
 const port = process.env.PORT || 3001;
 
 app.use(express.json({ limit: '50mb' }));
@@ -16,7 +17,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 sequelize
-   .sync()
+   .sync({force:true})
    .then(async () => {
       console.log('Modelos sincronizados con la base de datos');
    })

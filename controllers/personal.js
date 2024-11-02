@@ -153,8 +153,8 @@ const importPersonal = async (req, res) => {
    try {
       const existPers = await Personal.findAll({
          where: {
-            id: {
-               [Op.in]: data.map((e) => e.id),
+            idPersonal: {
+               [Op.in]: data.map((e) => e.idPersonal),
             },
          },
       });
@@ -162,7 +162,7 @@ const importPersonal = async (req, res) => {
       const newData = data.filter((newP) => {
          return !existPers.some(
             (existPersonal) =>
-               existPersonal.id === newP.id.toString()
+               existPersonal.idPersonal === newP.idPersonal.toString()
          );
       });
 
