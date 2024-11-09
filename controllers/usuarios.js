@@ -97,7 +97,7 @@ const Login = async (req, res) => {
       }
 
       delete result.dataValues.password;
-      
+      console.log(result)
       return res.status(200).json(result);
    } catch (err) {
       console.log(err);

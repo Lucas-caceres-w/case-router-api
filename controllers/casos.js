@@ -24,23 +24,28 @@ const deleteDocument = async (idCaso, next) => {
          if (columnas && columnas?.length > 0) {
             for (const columna of columnas) {
                const valor = documento[columna];
-               if (valor) {
-                  const filePath = path.join(
-                     __dirname,
-                     '../public/pdf_temp/',
-                     valor
-                  );
-                  try {
-                     if (fs.existsSync(filePath)) {
-                        fs.unlinkSync(filePath);
-                        console.log(`Archivo ${valor} eliminado`);
-                     } else {
-                        console.log(
-                           `El archivo ${valor} no existe, no se pudo eliminar`
+               if (Array.isArray(valor) && valor.length > 0) {
+                  for (const ruta of valor) {
+                     console.log(ruta)
+                     if (ruta) {
+                        const filePath = path.join(
+                           __dirname,
+                           '../public/pdf_temp/',
+                           ruta
                         );
+                        try {
+                           if (fs.existsSync(filePath)) {
+                              fs.unlinkSync(filePath);
+                              console.log(`Archivo ${ruta} eliminado`);
+                           } else {
+                              console.log(
+                                 `El archivo ${ruta} no existe, no se pudo eliminar`
+                              );
+                           }
+                        } catch (err) {
+                           console.error(err);
+                        }
                      }
-                  } catch (err) {
-                     console.error(err);
                   }
                }
             }
@@ -189,6 +194,7 @@ const deleteCaso = async (req, res) => {
    const id = await req.params.id;
    try {
       const exist = await Casos.count({ where: { id: id } });
+      console.log(exist);
       if (exist) {
          await deleteDocument(id);
          const result = await Casos.destroy({
@@ -259,7 +265,7 @@ const importData = async (req, res) => {
          }
          await transaction.commit();
 
-         console.log(createCaso)
+         console.log(createCaso);
          return res.status(200).json('AddCases');
       } else {
          return res.status(200).json('noAdd');
