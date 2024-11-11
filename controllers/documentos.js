@@ -1,4 +1,6 @@
 const { Docs, Casos } = require('../models'); // Asegúrate de usar el nombre correcto del modelo
+const path = require('path')
+const fs = require('fs')
 
 const getDocs = async (req, res) => {
    try {
@@ -73,9 +75,49 @@ const AddDocument = async (req, res) => {
    }
 };
 
+const deleteDocsById = async (req, res) => {
+   const id = req.params.id;
+   const { file, key } = req.body;
+   try {
+      const docs = await Docs.findOne({ where: { id: id } });
+      if (docs && docs[key] && Array.isArray(docs[key])) {
+         const fileIndex = docs[key].indexOf(file);
+         if (fileIndex !== -1) {
+            const filePath = path.join(__dirname, '../public/pdf_temp/', file);
+            if (fs.existsSync(filePath)) {
+               fs.unlinkSync(filePath);
+               console.log(
+                  `Archivo ${file} eliminado del sistema de archivos.`
+               );
+            } else {
+               console.log(
+                  `El archivo ${file} no existe en el sistema de archivos.`
+               );
+            }
+            docs[key].splice(fileIndex, 1);
+            await Docs.update({ [key]: docs[key] }, { where: { id: id } });
+
+            res.status(200).json('Documento eliminado');
+         } else {
+            res.status(404).json({
+               message: 'El archivo especificado no existe en el registro.',
+            });
+         }
+      } else {
+         res.status(404).json({
+            message: 'El documento o campo especificado no existe.',
+         });
+      }
+   } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+   }
+};
+
 module.exports = {
    getDocs,
    uploadDoc,
    AddDocument,
    getDocsByCasoId,
+   deleteDocsById,
 };

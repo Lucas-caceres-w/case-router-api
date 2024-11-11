@@ -4,6 +4,7 @@ const {
    getDocs,
    AddDocument,
    getDocsByCasoId,
+   deleteDocsById,
 } = require('../controllers/index');
 const router = express.Router();
 const multer = require('multer');
@@ -24,6 +25,8 @@ router.get('/', getDocs);
 router.post('/', uploadDoc);
 
 router.get('/:id', getDocsByCasoId);
+
+router.delete('/:id', deleteDocsById);
 
 router.patch('/:id', uploads.single('Blob'), AddDocument);
 

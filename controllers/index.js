@@ -11,6 +11,7 @@ const {
    getDocs,
    AddDocument,
    getDocsByCasoId,
+   deleteDocsById,
 } = require('../controllers/documentos');
 const {
    getFotos,
@@ -68,5 +69,6 @@ module.exports = {
    updatePersonal,
    deletePersonal,
    addDocs,
+   deleteDocsById,
    importPersonal,
 };
