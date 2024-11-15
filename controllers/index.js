@@ -38,6 +38,8 @@ const {
    addDocs,
    getPersonalByDate,
    importPersonal,
+   getCertificaciones,
+   deleteCertificacion,
 } = require('../controllers/personal');
 
 module.exports = {
@@ -71,4 +73,6 @@ module.exports = {
    addDocs,
    deleteDocsById,
    importPersonal,
+   getCertificaciones,
+   deleteCertificacion,
 };

@@ -1,5 +1,7 @@
 const { Op, Sequelize } = require('sequelize');
 const { Personal, Certificacion } = require('../models');
+const path = require('path')
+const fs = require('fs')
 const sequelize = require('../config/connect');
 
 const getPersonal = async (req, res) => {
@@ -7,7 +9,10 @@ const getPersonal = async (req, res) => {
    let result;
    try {
       if (estatus === 'all') {
-         result = await Personal.findAll({ include: Certificacion });
+         result = await Personal.findAll({
+            include: Certificacion,
+            order: [[{ model: Certificacion }, 'id', 'DESC']],
+         });
       } else {
          result = await Personal.findAll({
             where:
@@ -27,6 +32,7 @@ const getPersonal = async (req, res) => {
                   required: false,
                },
             ],
+            order: [[{ model: Certificacion }, 'id', 'DESC']],
          });
       }
 
@@ -53,7 +59,7 @@ const getPersonalById = async (req, res) => {
 const getPersonalByDate = async (req, res) => {
    const { desde, hasta, estatus } = await req.body;
 
-   console.log(desde,hasta,estatus);
+   console.log(desde, hasta, estatus);
    try {
       const personal = await Personal.findAll({
          where: {
@@ -120,7 +126,7 @@ const deletePersonal = async (req, res) => {
 const addDocs = async (req, res) => {
    const { id } = req.params;
    const fileName = req.file.filename;
-   const { tipo, inicio, exp , tipoEvaluacion } = req.query;
+   const { tipo, inicio, exp, tipoEvaluacion } = req.query;
 
    try {
       const personal = await Personal.findByPk(id);
@@ -179,14 +185,58 @@ const importPersonal = async (req, res) => {
          } */
          await transaction.commit();
 
-         console.log(createdPersonal)
+         console.log(createdPersonal);
          return res.status(200).json('AddCases');
       } else {
          return res.status(200).json('noAdd');
       }
    } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(500).json(err);
+   }
+};
+
+const getCertificaciones = async (req, res) => {
+   const id = req.params.id;
+   try {
+      const result = await Personal.findOne({
+         where: { id },
+         include: [Certificacion],
+      });
+      console.log(result);
+      return res.status(200).json(result);
+   } catch (err) {
+      console.log(err);
+      return res.status(404).json(err);
+   }
+};
+
+const deleteCertificacion = async (req, res) => {
+   const idCert = req.params.id;
+   try {
+      const certificado = await Certificacion.findOne({
+         where: { id: idCert },
+      });
+      
+      if (certificado) {
+         const file = certificado.fileName;
+         const filePath = path.join(__dirname, '../public/pdf_personal/', file);
+         if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log(`Archivo ${file} eliminado del sistema de archivos.`);
+            await Certificacion.destroy({
+               where: { id: idCert },
+            });
+         } else {
+            console.log(
+               `El archivo ${file} no existe en el sistema de archivos.`
+            );
+         }
+      }
+      return res.status(200).json('Certificacion eliminada');
+   } catch (err) {
+      console.log(err);
+      return res.status(404).json(err);
    }
 };
 
@@ -198,5 +248,7 @@ module.exports = {
    addDocs,
    getPersonal,
    getPersonalByDate,
-   importPersonal
+   importPersonal,
+   getCertificaciones,
+   deleteCertificacion,
 };

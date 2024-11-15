@@ -9,6 +9,8 @@ const {
    addDocs,
    getPersonalByDate,
    importPersonal,
+   getCertificaciones,
+   deleteCertificacion,
 } = require('../controllers/index');
 const multer = require('multer');
 
@@ -24,6 +26,10 @@ const storage = multer.diskStorage({
 const uploads = multer({ storage: storage });
 
 router.get('/', getPersonal);
+
+router.get('/certificaciones/:id', getCertificaciones);
+
+router.delete('/certificacion/:id', deleteCertificacion);
 
 router.post('/', addPersonal);
 
