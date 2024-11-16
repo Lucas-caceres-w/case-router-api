@@ -11,6 +11,8 @@ const {
    importPersonal,
    getCertificaciones,
    deleteCertificacion,
+   getOneCertificacion,
+   editPersonal,
 } = require('../controllers/index');
 const multer = require('multer');
 
@@ -40,6 +42,10 @@ router.post('/dates', getPersonalByDate);
 router.post('/data-import', importPersonal);
 
 router.patch('/:id', updatePersonal);
+
+router.get('/certificacion/:id', getOneCertificacion);
+
+router.patch('/certificacion/:id', editPersonal);
 
 router.delete('/:id', deletePersonal);
 

@@ -1,7 +1,7 @@
 const { Op, Sequelize } = require('sequelize');
 const { Personal, Certificacion } = require('../models');
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 const sequelize = require('../config/connect');
 
 const getPersonal = async (req, res) => {
@@ -217,7 +217,7 @@ const deleteCertificacion = async (req, res) => {
       const certificado = await Certificacion.findOne({
          where: { id: idCert },
       });
-      
+
       if (certificado) {
          const file = certificado.fileName;
          const filePath = path.join(__dirname, '../public/pdf_personal/', file);
@@ -240,6 +240,39 @@ const deleteCertificacion = async (req, res) => {
    }
 };
 
+const getOneCertificacion = async (req, res) => {
+   const id = req.params.id;
+   try {
+      const result = await Certificacion.findOne({
+         where: { id },
+      });
+
+      return res.status(200).json(result);
+   } catch (err) {
+      console.log(err);
+      return res.status(404).json(err);
+   }
+};
+
+const editPersonal = async (req, res) => {
+   const { data } = await req.body;
+   const id = req.params.id;
+   try {
+      const certificado = await Certificacion.findOne({
+         where: { id },
+      });
+
+      await certificado.update(data);
+
+      await certificado.save();
+
+      return res.status(200).json('certificado editado');
+   } catch (err) {
+      console.log(err);
+      return res.status(404).json(err);
+   }
+};
+
 module.exports = {
    getPersonalById,
    addPersonal,
@@ -251,4 +284,6 @@ module.exports = {
    importPersonal,
    getCertificaciones,
    deleteCertificacion,
+   getOneCertificacion,
+   editPersonal,
 };
