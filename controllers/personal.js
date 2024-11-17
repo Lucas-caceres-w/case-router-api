@@ -165,10 +165,11 @@ const importPersonal = async (req, res) => {
          },
       });
 
+      const existingIds = existPers.map((p) => p.idPersonal.toString());
+
       const newData = data.filter((newP) => {
-         return !existPers.some(
-            (existPersonal) =>
-               existPersonal.idPersonal === newP.idPersonal.toString()
+         return !existPers.some((existPersonal) =>
+            existingIds.includes(newP.idPersonal.toString())
          );
       });
 
@@ -177,6 +178,7 @@ const importPersonal = async (req, res) => {
 
          const createdPersonal = await Personal.bulkCreate(newData, {
             validate: true,
+            ignoreDuplicates: true,
             transaction,
          });
 
@@ -186,7 +188,7 @@ const importPersonal = async (req, res) => {
          await transaction.commit();
 
          console.log(createdPersonal);
-         return res.status(200).json('AddCases');
+         return res.status(200).json('AddPersonal');
       } else {
          return res.status(200).json('noAdd');
       }
