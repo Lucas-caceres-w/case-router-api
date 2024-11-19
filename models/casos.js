@@ -61,10 +61,28 @@ const Caso = sequelize.define('casos', {
    materialARemover: {
       type: DataTypes.STRING,
    },
-   cantidadDesperdiciada: {
+   cantidadDesperdiciadaPlomo: {
       type: DataTypes.STRING,
    },
-   cantidadEstimada: {
+   cantidadEstimadaPlomoYardas: {
+      type: DataTypes.STRING,
+   },
+   cantidadEstimadaPlomoPiesCuad: {
+      type: DataTypes.STRING,
+   },
+   cantidadEstimadaPlomoPiesLineales: {
+      type: DataTypes.STRING,
+   },
+   cantidadDesperdiciadaAsbesto: {
+      type: DataTypes.STRING,
+   },
+   cantidadEstimadaAsbestoYardas: {
+      type: DataTypes.STRING,
+   },
+   cantidadEstimadaAsbestoPiesCuad: {
+      type: DataTypes.STRING,
+   },
+   cantidadEstimadaAsbestoPiesLineales: {
       type: DataTypes.STRING,
    },
    fechaRecibido: {

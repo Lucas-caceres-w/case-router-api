@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 sequelize
-   .sync()
+   .sync({ force: true })
    .then(async () => {
       console.log('Modelos sincronizados con la base de datos');
    })
