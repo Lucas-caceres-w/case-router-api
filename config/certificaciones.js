@@ -4,8 +4,8 @@ const { format } = require('date-fns');
 
 const sendNotification = async (listadoPersonal) => {
    const mailOptions = {
-      from: 'lucas.caceres.lc@hotmail.com',
-      to: 'lucas.caceres.lc@hotmail.com', // Asegúrate de tener el campo email en el modelo Personal
+      from: 'caseroute_support@gmail.com',
+      to: 'mtorres.mjr@gmail.com',
       subject: `Listado de certificaciones próximas a vencer o vencidas`,
       text: `Hola Melvin, a continuación se muestra el listado 
       del personal con certificaciones vencidas o próximas a vencer:\n\n${listadoPersonal}`,
@@ -19,7 +19,6 @@ const sendNotification = async (listadoPersonal) => {
    }
 };
 
-// Función que verifica si una certificación está vencida o próxima a vencer
 const isCertificacionVencida = (fechaExpiracion) => {
    const now = new Date();
    const expirationDate = new Date(fechaExpiracion);
