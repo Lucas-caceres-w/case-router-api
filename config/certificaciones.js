@@ -5,7 +5,7 @@ const { format } = require('date-fns');
 const sendNotification = async (listadoPersonal) => {
    const mailOptions = {
       from: 'caseroute_support@gmail.com',
-      to: 'mtorres.mjr@gmail.com',
+      to: ['mtorres.mjr@gmail.com', 'framos@sunsetcontractors.com'],
       subject: `Listado de certificaciones próximas a vencer o vencidas`,
       text: `Hola Melvin, a continuación se muestra el listado 
       del personal con certificaciones vencidas o próximas a vencer:\n\n${listadoPersonal}`,
