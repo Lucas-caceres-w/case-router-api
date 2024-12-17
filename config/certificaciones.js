@@ -7,7 +7,7 @@ const sendNotification = async (listadoPersonal) => {
       from: 'caseroute_support@gmail.com',
       to: ['mtorres.mjr@gmail.com', 'framos@sunsetcontractors.com'],
       subject: `Listado de certificaciones próximas a vencer o vencidas`,
-      text: `Hola Melvin, a continuación se muestra el listado 
+      text: `Hola, a continuación se muestra el listado 
       del personal con certificaciones vencidas o próximas a vencer:\n\n${listadoPersonal}`,
    };
 
@@ -63,7 +63,9 @@ const verificarCertificaciones = async () => {
          }
 
          if (certificacionesVencidas) {
-            listadoPersonal += `Personal: ${personal.name} ${personal.secondName}\n${certificacionesVencidas}\n`;
+            listadoPersonal += `Personal: ${personal.name} ${
+               personal.apellidoPaterno || personal.apellidoMaterno
+            }\n${certificacionesVencidas}\n`;
          }
       }
 
