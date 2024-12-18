@@ -1,6 +1,6 @@
 const { Docs, Casos } = require('../models'); // Asegúrate de usar el nombre correcto del modelo
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
 const getDocs = async (req, res) => {
    try {
@@ -80,19 +80,20 @@ const deleteDocsById = async (req, res) => {
    const { file, key } = req.body;
    try {
       const docs = await Docs.findOne({ where: { id: id } });
+      const Caso = await Casos.findOne({ where: { id: id } });
       if (docs && docs[key] && Array.isArray(docs[key])) {
          const fileIndex = docs[key].indexOf(file);
          if (fileIndex !== -1) {
             const filePath = path.join(__dirname, '../public/pdf_temp/', file);
             if (fs.existsSync(filePath)) {
                fs.unlinkSync(filePath);
-               console.log(
-                  `Archivo ${file} eliminado del sistema de archivos.`
-               );
+               if (key === 'cambioOrden') {
+                  Caso.update({ diasAdicionales: null });
+               }
             } else {
-               console.log(
-                  `El archivo ${file} no existe en el sistema de archivos.`
-               );
+               res.status(404).json({
+                  message: 'El archivo especificado no existe en el registro.',
+               });
             }
             docs[key].splice(fileIndex, 1);
             await Docs.update({ [key]: docs[key] }, { where: { id: id } });
