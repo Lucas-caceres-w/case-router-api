@@ -12,6 +12,8 @@ const {
    AddDocument,
    getDocsByCasoId,
    deleteDocsById,
+   getOrderDays,
+   editOrderDays
 } = require('../controllers/documentos');
 const {
    getFotos,
@@ -79,4 +81,6 @@ module.exports = {
    deleteCertificacion,
    getOneCertificacion,
    editPersonal,
+   getOrderDays,
+   editOrderDays
 };

@@ -115,10 +115,46 @@ const deleteDocsById = async (req, res) => {
    }
 };
 
+const getOrderDays = async (req, res) => {
+   const { id } = await req.params;
+   try {
+      const docs = await Casos.findOne({
+         where: {
+            id: id,
+         },
+      });
+      const response = [docs.id, docs.diasAdicionales];
+      res.status(200).json(response);
+   } catch (err) {
+      res.status(500).json(err);
+   }
+};
+
+const editOrderDays = async (req, res) => {
+   const { id, value } = await req.body;
+   try {
+      const docs = await Casos.findOne({
+         where: {
+            id: id,
+         },
+      });
+
+      docs.update({ diasAdicionales: value });
+
+      docs.save();
+
+      res.status(200).json(docs);
+   } catch (err) {
+      res.status(500).json(err);
+   }
+};
+
 module.exports = {
    getDocs,
    uploadDoc,
    AddDocument,
    getDocsByCasoId,
    deleteDocsById,
+   getOrderDays,
+   editOrderDays,
 };
