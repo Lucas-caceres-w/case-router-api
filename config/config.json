@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
+    "password": "root",
+    "database": "casos_db",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "caseroute",
+    "password": "iFb0qcg2lKpLn8CLmaXq",
+    "database": "caseroute",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }
