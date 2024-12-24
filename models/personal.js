@@ -8,7 +8,7 @@ const Personal = sequelize.define('personal', {
       autoIncrement: true,
    },
    idPersonal: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       unique: true,
    },
    name: {
@@ -28,7 +28,7 @@ const Personal = sequelize.define('personal', {
       allowNull: false,
    },
    numContacto: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false,
    },
    trabaja: {
