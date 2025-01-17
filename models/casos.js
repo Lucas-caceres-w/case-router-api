@@ -29,6 +29,9 @@ const Caso = sequelize.define('casos', {
    direccionProyecto: {
       type: DataTypes.STRING,
    },
+   zipCode: {
+      type: DataTypes.STRING,
+   },
    latitud: {
       type: DataTypes.DOUBLE,
       allowNull: false,

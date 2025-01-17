@@ -177,6 +177,7 @@ const createCaso = async (req, res) => {
 const updateCaso = async (req, res) => {
    const id = await req.params.id;
    const data = await req.body;
+   console.log(data)
    try {
       const result = await Casos.update(data, {
          where: {

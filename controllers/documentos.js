@@ -39,6 +39,7 @@ const AddDocument = async (req, res) => {
    const fileName = req.file.filename;
    const tipo = req.body.option;
    const daysAdd = req.body.days;
+   const date = req.body.date;
 
    try {
       const documento = await Docs.findOne({
@@ -63,7 +64,7 @@ const AddDocument = async (req, res) => {
 
       if (tipo === 'cambioOrden') {
          await proyecto.update({
-            cambioOrden: new Date(),
+            cambioOrden: new Date(date),
             diasAdicionales: daysAdd,
          });
       }

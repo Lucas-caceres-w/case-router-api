@@ -68,6 +68,18 @@ const Documento = sequelize.define('documentos', {
       type: DataTypes.JSON,
       allowNull: true,
    },
+   noPresenciaABS: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   noPresenciaLBL: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
+   manifiesto: {
+      type: DataTypes.JSON,
+      allowNull: true,
+   },
    otros: {
       type: DataTypes.JSON,
       allowNull: true,
