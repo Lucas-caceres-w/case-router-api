@@ -7,37 +7,56 @@ const sequelize = require('../config/connect');
 const getPersonal = async (req, res) => {
    const { estatus } = req.query;
    let result;
+
    try {
       if (estatus === 'all') {
          result = await Personal.findAll({
-            include: Certificacion,
+            include: {
+               model: Certificacion,
+               required: false,
+            },
             order: [[{ model: Certificacion }, 'id', 'DESC']],
          });
       } else {
-         result = await Personal.findAll({
-            where:
-               estatus === 'active'
-                  ? { trabaja: true }
-                  : {
-                       [Op.or]: [
-                          { trabaja: false },
-                          Sequelize.literal(
-                             '(SELECT COUNT(*) FROM certificacions WHERE certificacions.personalId = personal.id) = 0'
-                          ),
-                       ],
-                    },
+         const whereClause = {
             include: [
                {
                   model: Certificacion,
-                  required: false,
+                  where:
+                     estatus === 'active'
+                        ? {
+                             tipoDocumento: {
+                                [Op.in]: ['asbesto', 'plomo', 'asbesto/plomo'],
+                             },
+                          }
+                        : {},
+                  required: estatus === 'active', // Required for active, optional for inactive.
                },
             ],
+         };
+
+         if (estatus === 'active') {
+            whereClause.where = { trabaja: true };
+         } else if (estatus === 'inactive') {
+            whereClause.where = {
+               [Op.or]: [
+                  { trabaja: false },
+                  Sequelize.literal(
+                     "(SELECT COUNT(*) FROM certificacions WHERE certificacions.personalId = personal.id AND certificacions.tipoDocumento IN ('asbesto', 'plomo', 'asbesto/plomo')) = 0"
+                  ),
+               ],
+            };
+         }
+
+         result = await Personal.findAll({
+            ...whereClause,
             order: [[{ model: Certificacion }, 'id', 'DESC']],
          });
       }
 
       return res.status(200).json(result);
    } catch (err) {
+      console.error(err);
       return res.status(404).json(err);
    }
 };
