@@ -5,17 +5,17 @@ module.exports = {
    async up(queryInterface, Sequelize) {
       await queryInterface.addColumn('documentos', 'noPresenciaABS', {
          type: Sequelize.JSON,
-         allowNull: false,
+         allowNull: true,
       });
 
       await queryInterface.addColumn('documentos', 'noPresenciaLBL', {
          type: Sequelize.JSON,
-         allowNull: false,
+         allowNull: true,
       });
 
       await queryInterface.addColumn('documentos', 'manifiesto', {
          type: Sequelize.JSON,
-         allowNull: false,
+         allowNull: true,
       });
    },
 
